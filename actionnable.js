@@ -7,9 +7,9 @@ var AdaptiveCards =
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
+/******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/ 		}
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -1316,7 +1316,7 @@ exports.renderSeparation = renderSeparation;
 function stringToCssColor(color) {
     var regEx = /#([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})?/gi;
     var matches = regEx.exec(color);
-    if (matches && matches[4]) {
+    if (matches[4]) {
         var a = parseInt(matches[1], 16) / 255;
         var r = parseInt(matches[2], 16);
         var g = parseInt(matches[3], 16);
@@ -1440,7 +1440,6 @@ var CardElement = (function () {
     function CardElement() {
         this._parent = null;
         this.horizontalAlignment = "left";
-        this.separation = "default";
     }
     CardElement.prototype.internalGetNonZeroPadding = function (element, padding) {
         if (padding.top == 0) {
@@ -1808,7 +1807,7 @@ var FactSet = (function (_super) {
         if (this.speak != null) {
             return this.speak + '\n';
         }
-        // render each fact
+        // render each fact 
         var speak = null;
         if (this.facts.length > 0) {
             speak = '';
@@ -1844,18 +1843,15 @@ var Image = (function (_super) {
         var element = null;
         if (!Utils.isNullOrEmpty(this.url)) {
             element = document.createElement("div");
-            element.classList.add("ac-image");
             element.style.display = "flex";
             element.style.alignItems = "flex-start";
-            if (this.selectAction != null) {
-                element.classList.add("ac-selectable");
-            }
             element.onclick = function (e) {
-                if (_this.selectAction) {
-                    _this.selectAction.execute();
+                if (_this.selectAction != null) {
+                    raiseExecuteActionEvent(_this.selectAction);
                     e.cancelBubble = true;
                 }
             };
+            element.classList.add("ac-image");
             switch (this.horizontalAlignment) {
                 case "center":
                     element.style.justifyContent = "center";
@@ -1867,15 +1863,14 @@ var Image = (function (_super) {
                     element.style.justifyContent = "flex-start";
                     break;
             }
+            if (this.selectAction != null) {
+                element.classList.add("ac-selectable");
+            }
             var imageElement = document.createElement("img");
-            imageElement.style.maxHeight = "100%";
+            imageElement.style.width = "100%";
             switch (this.size) {
-                case "stretch":
-                    imageElement.style.width = "100%";
-                    break;
                 case "auto":
                     imageElement.style.maxWidth = "100%";
-                    imageElement.style.maxHeight = "500px";
                     break;
                 case "small":
                     imageElement.style.maxWidth = hostConfig.imageSizes.small + "px";
@@ -1935,14 +1930,15 @@ var ImageSet = (function (_super) {
         var element = null;
         if (this._images.length > 0) {
             element = document.createElement("div");
-            element.style.display = "flex";
-            element.style.flexWrap = "wrap";
             for (var i = 0; i < this._images.length; i++) {
                 var renderedImage = this._images[i].render();
-                renderedImage.style.display = "inline-flex";
+                // Default display for Image is "block" but that forces them to stack vertically
+                // in a div. So we need to override display and set it to "inline-block". The
+                // drawback is that it adds a small spacing at the bottom of each image, which
+                // simply can't be removed cleanly in a cross-browser compatible way.
+                renderedImage.style.display = "inline-block";
                 renderedImage.style.margin = "0px";
                 renderedImage.style.marginRight = "10px";
-                renderedImage.style.height = "100px";
                 Utils.appendChild(element, renderedImage);
             }
         }
@@ -1961,8 +1957,8 @@ var ImageSet = (function (_super) {
             var jsonImages = json["images"];
             for (var i = 0; i < jsonImages.length; i++) {
                 var image = new Image();
-                image.parse(jsonImages[i]);
                 image.size = this.imageSize;
+                image.url = jsonImages[i]["url"];
                 this.addImage(image);
             }
         }
@@ -2041,37 +2037,22 @@ var TextInput = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     TextInput.prototype.internalRender = function () {
+        this._textareaElement = document.createElement("textarea");
+        this._textareaElement.className = "ac-input ac-textInput";
+        this._textareaElement.style.width = "100%";
         if (this.isMultiline) {
-            this._textareaElement = document.createElement("textarea");
-            this._textareaElement.className = "ac-input ac-textInput ac-multiline";
-            this._textareaElement.style.width = "100%";
-            if (!Utils.isNullOrEmpty(this.placeholder)) {
-                this._textareaElement.placeholder = this.placeholder;
-            }
-            if (!Utils.isNullOrEmpty(this.defaultValue)) {
-                this._textareaElement.value = this.defaultValue;
-            }
-            if (this.maxLength > 0) {
-                this._textareaElement.maxLength = this.maxLength;
-            }
-            return this._textareaElement;
+            this._textareaElement.classList.add("ac-multiline");
         }
-        else {
-            this._inputElement = document.createElement("input");
-            this._inputElement.type = "text";
-            this._inputElement.className = "ac-input ac-textInput";
-            this._inputElement.style.width = "100%";
-            if (!Utils.isNullOrEmpty(this.placeholder)) {
-                this._inputElement.placeholder = this.placeholder;
-            }
-            if (!Utils.isNullOrEmpty(this.defaultValue)) {
-                this._inputElement.value = this.defaultValue;
-            }
-            if (this.maxLength > 0) {
-                this._inputElement.maxLength = this.maxLength;
-            }
-            return this._inputElement;
+        if (!Utils.isNullOrEmpty(this.placeholder)) {
+            this._textareaElement.placeholder = this.placeholder;
         }
+        if (!Utils.isNullOrEmpty(this.defaultValue)) {
+            this._textareaElement.value = this.defaultValue;
+        }
+        if (this.maxLength > 0) {
+            this._textareaElement.maxLength = this.maxLength;
+        }
+        return this._textareaElement;
     };
     TextInput.prototype.getJsonTypeName = function () {
         return "Input.Text";
@@ -2084,12 +2065,7 @@ var TextInput = (function (_super) {
     };
     Object.defineProperty(TextInput.prototype, "value", {
         get: function () {
-            if (this.isMultiline) {
-                return this._textareaElement ? this._textareaElement.value : null;
-            }
-            else {
-                return this._inputElement ? this._inputElement.value : null;
-            }
+            return this._textareaElement ? this._textareaElement.value : null;
         },
         enumerable: true,
         configurable: true
@@ -2181,9 +2157,6 @@ var ChoiceSetInput = (function (_super) {
                     var option = document.createElement("option");
                     option.value = this.choices[i].value;
                     option.text = this.choices[i].title;
-                    if (this.choices[i].value == this.defaultValue) {
-                        option.selected = true;
-                    }
                     Utils.appendChild(this._selectElement, option);
                 }
                 return this._selectElement;
@@ -2202,9 +2175,6 @@ var ChoiceSetInput = (function (_super) {
                     radioInput.style.verticalAlign = "middle";
                     radioInput.name = this.id;
                     radioInput.value = this.choices[i].value;
-                    if (this.choices[i].value == this.defaultValue) {
-                        radioInput.checked = true;
-                    }
                     this._toggleInputs.push(radioInput);
                     var label = new TextBlock();
                     label.text = this.choices[i].title;
@@ -2222,7 +2192,6 @@ var ChoiceSetInput = (function (_super) {
         }
         else {
             // Render as a list of toggle inputs
-            var defaultValues = this.defaultValue ? this.defaultValue.split(",") : null;
             var element = document.createElement("div");
             element.className = "ac-input";
             element.style.width = "100%";
@@ -2234,11 +2203,6 @@ var ChoiceSetInput = (function (_super) {
                 checkboxInput.style.display = "inline-block";
                 checkboxInput.style.verticalAlign = "middle";
                 checkboxInput.value = this.choices[i].value;
-                if (defaultValues) {
-                    if (defaultValues.indexOf(this.choices[i].value) >= 0) {
-                        checkboxInput.checked = true;
-                    }
-                }
                 this._toggleInputs.push(checkboxInput);
                 var label = new TextBlock();
                 label.text = this.choices[i].title;
@@ -2292,7 +2256,7 @@ var ChoiceSetInput = (function (_super) {
                     return this._selectElement ? this._selectElement.value : null;
                 }
                 else {
-                    if (!this._toggleInputs || this._toggleInputs.length == 0) {
+                    if (this._toggleInputs.length == 0) {
                         return null;
                     }
                     for (var i = 0; i < this._toggleInputs.length; i++) {
@@ -2304,7 +2268,7 @@ var ChoiceSetInput = (function (_super) {
                 }
             }
             else {
-                if (!this._toggleInputs || this._toggleInputs.length == 0) {
+                if (this._toggleInputs.length == 0) {
                     return null;
                 }
                 var result = "";
@@ -2370,9 +2334,6 @@ var DateInput = (function (_super) {
         this._dateInputElement.type = "date";
         this._dateInputElement.className = "ac-input ac-dateInput";
         this._dateInputElement.style.width = "100%";
-        if (!Utils.isNullOrEmpty(this.defaultValue)) {
-            this._dateInputElement.value = this.defaultValue;
-        }
         return this._dateInputElement;
     };
     DateInput.prototype.getJsonTypeName = function () {
@@ -2398,9 +2359,6 @@ var TimeInput = (function (_super) {
         this._timeInputElement.type = "time";
         this._timeInputElement.className = "ac-input ac-timeInput";
         this._timeInputElement.style.width = "100%";
-        if (!Utils.isNullOrEmpty(this.defaultValue)) {
-            this._timeInputElement.value = this.defaultValue;
-        }
         return this._timeInputElement;
     };
     TimeInput.prototype.getJsonTypeName = function () {
@@ -2416,6 +2374,11 @@ var TimeInput = (function (_super) {
     return TimeInput;
 }(Input));
 exports.TimeInput = TimeInput;
+var ActionButtonStyle;
+(function (ActionButtonStyle) {
+    ActionButtonStyle[ActionButtonStyle["Link"] = 0] = "Link";
+    ActionButtonStyle[ActionButtonStyle["Push"] = 1] = "Push";
+})(ActionButtonStyle || (ActionButtonStyle = {}));
 var ActionButtonState;
 (function (ActionButtonState) {
     ActionButtonState[ActionButtonState["Normal"] = 0] = "Normal";
@@ -2425,7 +2388,6 @@ var ActionButtonState;
 var ActionButton = (function () {
     function ActionButton(action, style) {
         var _this = this;
-        this._style = "button";
         this._element = null;
         this._state = ActionButtonState.Normal;
         this.onClick = null;
@@ -2444,16 +2406,13 @@ var ActionButton = (function () {
         }
     };
     ActionButton.prototype.updateCssStyle = function () {
-        this._element.className = this._style == "link" ? "ac-linkButton" : "ac-pushButton";
-        if (this._action instanceof ShowCardAction) {
-            this._element.classList.add("expandable");
-        }
+        this._element.className = this._style == ActionButtonStyle.Link ? "ac-linkButton " : "ac-pushButton ";
         switch (this._state) {
             case ActionButtonState.Expanded:
-                this._element.classList.add("expanded");
+                this._element.classList.add("ac-expanded");
                 break;
             case ActionButtonState.Subdued:
-                this._element.classList.add("subdued");
+                this._element.classList.add("ac-subdued");
                 break;
         }
     };
@@ -2544,9 +2503,6 @@ var ExternalAction = (function (_super) {
     function ExternalAction() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    ExternalAction.prototype.execute = function () {
-        raiseExecuteActionEvent(this);
-    };
     return ExternalAction;
 }(Action));
 exports.ExternalAction = ExternalAction;
@@ -2727,9 +2683,6 @@ var ShowCardAction = (function (_super) {
         _super.prototype.setParent.call(this, value);
         invokeSetParent(this.card, value);
     };
-    ShowCardAction.prototype.execute = function () {
-        raiseShowPopupCardEvent(this);
-    };
     ShowCardAction.prototype.getJsonTypeName = function () {
         return "Action.ShowCard";
     };
@@ -2750,9 +2703,7 @@ var ActionCollection = (function () {
     function ActionCollection(owner) {
         this._actionButtons = [];
         this._expandedAction = null;
-        this._renderedActionCount = 0;
         this.items = [];
-        this.actionStyle = "button";
         this.onHideActionCardPane = null;
         this.onShowActionCardPane = null;
         this._owner = owner;
@@ -2775,7 +2726,7 @@ var ActionCollection = (function () {
         }
         var renderedCard = action.card.render();
         this._actionCardContainer.innerHTML = '';
-        this._actionCardContainer.style.marginTop = this._renderedActionCount > 0 ? hostConfig.actions.showCard.inlineTopMargin + "px" : "0px";
+        this._actionCardContainer.style.marginTop = this.items.length > 1 ? hostConfig.actions.showCard.inlineTopMargin + "px" : "0px";
         if (hostConfig.actions.showCard.actionMode == "inlineEdgeToEdge") {
             var padding = this._owner.getNonZeroPadding();
             this._actionCardContainer.style.paddingLeft = padding.left + "px";
@@ -2795,11 +2746,12 @@ var ActionCollection = (function () {
                 this._actionButtons[i].state = ActionButtonState.Normal;
             }
             this.hideActionCardPane();
-            actionButton.action.execute();
+            raiseExecuteActionEvent(actionButton.action);
         }
         else {
             if (hostConfig.actions.showCard.actionMode == "popup") {
-                actionButton.action.execute();
+                var actionShowCard = actionButton.action;
+                raiseShowPopupCardEvent(actionShowCard);
             }
             else if (actionButton.action === this._expandedAction) {
                 for (var i = 0; i < this._actionButtons.length; i++) {
@@ -2851,80 +2803,81 @@ var ActionCollection = (function () {
             return null;
         }
         var element = document.createElement("div");
-        this._actionCardContainer = document.createElement("div");
-        this._actionCardContainer.style.backgroundColor = Utils.stringToCssColor(hostConfig.actions.showCard.backgroundColor);
-        this._renderedActionCount = 0;
-        var maxActions = hostConfig.actions.maxActions ? Math.min(hostConfig.actions.maxActions, this.items.length) : this.items.length;
-        var forbiddenActionTypes = this._owner.getForbiddenActionTypes();
-        if (hostConfig.actions.preExpandSingleShowCardAction && maxActions == 1 && this.items[0] instanceof ShowCardAction && isActionAllowed(this.items[i], forbiddenActionTypes)) {
-            this.showActionCardPane(this.items[0]);
-            this._renderedActionCount = 1;
+        var buttonStrip = document.createElement("div");
+        buttonStrip.style.display = "flex";
+        if (hostConfig.actions.actionsOrientation == "horizontal") {
+            buttonStrip.style.flexDirection = "row";
+            switch (hostConfig.actions.actionAlignment) {
+                case "center":
+                    buttonStrip.style.justifyContent = "center";
+                    break;
+                case "right":
+                    buttonStrip.style.justifyContent = "flex-end";
+                    break;
+                default:
+                    buttonStrip.style.justifyContent = "flex-start";
+                    break;
+            }
         }
         else {
-            var buttonStrip = document.createElement("div");
-            buttonStrip.style.display = "flex";
-            if (hostConfig.actions.actionsOrientation == "horizontal") {
-                buttonStrip.style.flexDirection = "row";
-                switch (hostConfig.actions.actionAlignment) {
-                    case "center":
-                        buttonStrip.style.justifyContent = "center";
-                        break;
-                    case "right":
-                        buttonStrip.style.justifyContent = "flex-end";
-                        break;
-                    default:
-                        buttonStrip.style.justifyContent = "flex-start";
-                        break;
-                }
+            buttonStrip.style.flexDirection = "column";
+            switch (hostConfig.actions.actionAlignment) {
+                case "center":
+                    buttonStrip.style.alignItems = "center";
+                    break;
+                case "right":
+                    buttonStrip.style.alignItems = "flex-end";
+                    break;
+                case "stretch":
+                    buttonStrip.style.alignItems = "stretch";
+                    break;
+                default:
+                    buttonStrip.style.alignItems = "flex-start";
+                    break;
             }
-            else {
-                buttonStrip.style.flexDirection = "column";
-                switch (hostConfig.actions.actionAlignment) {
-                    case "center":
-                        buttonStrip.style.alignItems = "center";
-                        break;
-                    case "right":
-                        buttonStrip.style.alignItems = "flex-end";
-                        break;
-                    case "stretch":
-                        buttonStrip.style.alignItems = "stretch";
-                        break;
-                    default:
-                        buttonStrip.style.alignItems = "flex-start";
-                        break;
-                }
-            }
-            for (var i = 0; i < maxActions; i++) {
-                if (isActionAllowed(this.items[i], forbiddenActionTypes)) {
-                    var actionButton = new ActionButton(this.items[i], this.actionStyle);
-                    actionButton.element.style.overflow = "hidden";
-                    actionButton.element.style.overflow = "table-cell";
-                    actionButton.element.style.flex = hostConfig.actions.actionAlignment == "stretch" ? "0 1 100%" : "0 1 auto";
-                    actionButton.text = this.items[i].title;
-                    actionButton.onClick = function (ab) { _this.actionClicked(ab); };
-                    this._actionButtons.push(actionButton);
-                    buttonStrip.appendChild(actionButton.element);
-                    if (i < this.items.length - 1 && hostConfig.actions.buttonSpacing > 0) {
-                        var spacer = document.createElement("div");
-                        if (hostConfig.actions.actionsOrientation == "horizontal") {
-                            spacer.style.flex = "0 0 auto";
-                            spacer.style.width = hostConfig.actions.buttonSpacing + "px";
-                        }
-                        else {
-                            spacer.style.height = hostConfig.actions.buttonSpacing + "px";
-                        }
-                        Utils.appendChild(buttonStrip, spacer);
-                    }
-                    this._renderedActionCount++;
-                }
-            }
-            var buttonStripContainer = document.createElement("div");
-            buttonStripContainer.style.overflow = "hidden";
-            buttonStripContainer.appendChild(buttonStrip);
-            Utils.appendChild(element, buttonStripContainer);
         }
+        this._actionCardContainer = document.createElement("div");
+        this._actionCardContainer.style.backgroundColor = Utils.stringToCssColor(hostConfig.actions.showCard.backgroundColor);
+        var renderedActions = 0;
+        var actionButtonStyle = ActionButtonStyle.Push;
+        var maxActions = hostConfig.actions.maxActions ? Math.min(hostConfig.actions.maxActions, this.items.length) : this.items.length;
+        for (var i = 0; i < maxActions; i++) {
+            if (this.items[i] instanceof ShowCardAction) {
+                actionButtonStyle = ActionButtonStyle.Link;
+                break;
+            }
+        }
+        var forbiddenActionTypes = this._owner.getForbiddenActionTypes();
+        for (var i = 0; i < maxActions; i++) {
+            if (isActionAllowed(this.items[i], forbiddenActionTypes)) {
+                var actionButton = new ActionButton(this.items[i], actionButtonStyle);
+                actionButton.element.style.overflow = "hidden";
+                actionButton.element.style.overflow = "table-cell";
+                actionButton.element.style.flex = hostConfig.actions.actionAlignment == "stretch" ? "0 1 100%" : "0 1 auto";
+                actionButton.text = this.items[i].title;
+                actionButton.onClick = function (ab) { _this.actionClicked(ab); };
+                this._actionButtons.push(actionButton);
+                buttonStrip.appendChild(actionButton.element);
+                if (i < this.items.length - 1 && hostConfig.actions.buttonSpacing > 0) {
+                    var spacer = document.createElement("div");
+                    if (hostConfig.actions.actionsOrientation == "horizontal") {
+                        spacer.style.flex = "0 0 auto";
+                        spacer.style.width = hostConfig.actions.buttonSpacing + "px";
+                    }
+                    else {
+                        spacer.style.height = hostConfig.actions.buttonSpacing + "px";
+                    }
+                    Utils.appendChild(buttonStrip, spacer);
+                }
+                renderedActions++;
+            }
+        }
+        var buttonStripContainer = document.createElement("div");
+        buttonStripContainer.style.overflow = "hidden";
+        buttonStripContainer.appendChild(buttonStrip);
+        Utils.appendChild(element, buttonStripContainer);
         Utils.appendChild(element, this._actionCardContainer);
-        return this._renderedActionCount > 0 ? element : null;
+        return renderedActions > 0 ? element : null;
     };
     ActionCollection.prototype.addAction = function (action) {
         if (!action.parent) {
@@ -2952,14 +2905,12 @@ var ActionSet = (function (_super) {
     __extends(ActionSet, _super);
     function ActionSet() {
         var _this = _super.call(this) || this;
-        _this.actionStyle = "button";
         _this._actionCollection = new ActionCollection(_this);
         _this._actionCollection.onHideActionCardPane = function () { _this.showBottomSpacer(_this); };
         _this._actionCollection.onShowActionCardPane = function (action) { _this.hideBottomSpacer(_this); };
         return _this;
     }
     ActionSet.prototype.internalRender = function () {
-        this._actionCollection.actionStyle = this.actionStyle;
         return this._actionCollection.render();
     };
     ActionSet.prototype.getJsonTypeName = function () {
@@ -2974,7 +2925,6 @@ var ActionSet = (function (_super) {
     ActionSet.prototype.parse = function (json, itemsCollectionPropertyName) {
         if (itemsCollectionPropertyName === void 0) { itemsCollectionPropertyName = "items"; }
         _super.prototype.parse.call(this, json);
-        this.actionStyle = Utils.getValueOrDefault(json["actionStyle"], "button");
         if (json["actions"] != undefined) {
             var jsonActions = json["actions"];
             for (var i = 0; i < jsonActions.length; i++) {
@@ -3032,9 +2982,11 @@ var ContainerBase = (function (_super) {
             this._element.style.backgroundRepeat = "no-repeat";
             this._element.style.backgroundSize = "cover";
         }
-        var backgroundColor = this.getBackgroundColor();
-        if (backgroundColor) {
-            this._element.style.backgroundColor = Utils.stringToCssColor(backgroundColor);
+        else {
+            var backgroundColor = this.getBackgroundColor();
+            if (backgroundColor) {
+                this._element.style.backgroundColor = Utils.stringToCssColor(backgroundColor);
+            }
         }
         if (this.selectAction) {
             this._element.classList.add("ac-selectable");
@@ -3045,7 +2997,7 @@ var ContainerBase = (function (_super) {
         this._element.style.paddingLeft = this.padding.left + "px";
         this._element.onclick = function (e) {
             if (_this.selectAction != null) {
-                _this.selectAction.execute();
+                raiseExecuteActionEvent(_this.selectAction);
                 e.cancelBubble = true;
             }
         };
@@ -3063,7 +3015,7 @@ var ContainerBase = (function (_super) {
                 }
             }
         }
-        return this._element;
+        return renderedElementCount > 0 ? this._element : null;
     };
     ContainerBase.prototype.getBackgroundColor = function () {
         return null;
@@ -3184,17 +3136,15 @@ var Container = (function (_super) {
     };
     Container.prototype.internalRender = function () {
         var renderedContainer = _super.prototype.internalRender.call(this);
-        if (renderedContainer) {
-            var styleDefinition = this.style == "normal" ? hostConfig.container.normal : hostConfig.container.emphasis;
-            if (styleDefinition.borderThickness) {
-                renderedContainer.style.borderTop = styleDefinition.borderThickness.top + "px solid";
-                renderedContainer.style.borderRight = styleDefinition.borderThickness.right + "px solid";
-                renderedContainer.style.borderBottom = styleDefinition.borderThickness.bottom + "px solid";
-                renderedContainer.style.borderLeft = styleDefinition.borderThickness.left + "px solid";
-            }
-            if (styleDefinition.borderColor) {
-                renderedContainer.style.borderColor = Utils.stringToCssColor(styleDefinition.borderColor);
-            }
+        var styleDefinition = this.style == "normal" ? hostConfig.container.normal : hostConfig.container.emphasis;
+        if (styleDefinition.borderThickness) {
+            renderedContainer.style.borderTop = styleDefinition.borderThickness.top + "px solid";
+            renderedContainer.style.borderRight = styleDefinition.borderThickness.right + "px solid";
+            renderedContainer.style.borderBottom = styleDefinition.borderThickness.bottom + "px solid";
+            renderedContainer.style.borderLeft = styleDefinition.borderThickness.left + "px solid";
+        }
+        if (styleDefinition.borderColor) {
+            renderedContainer.style.borderColor = Utils.stringToCssColor(styleDefinition.borderColor);
         }
         return renderedContainer;
     };
@@ -3233,17 +3183,15 @@ var Column = (function (_super) {
     });
     Column.prototype.internalRender = function () {
         var element = _super.prototype.internalRender.call(this);
-        if (element) {
-            element.style.minWidth = "0";
-            if (typeof this.size === "number") {
-                element.style.flex = "1 1 " + (this._computedWeight > 0 ? this._computedWeight : this.size) + "%";
-            }
-            else if (this.size === "auto") {
-                element.style.flex = "0 1 auto";
-            }
-            else {
-                element.style.flex = "1 1 auto";
-            }
+        element.style.minWidth = "0";
+        if (typeof this.size === "number") {
+            element.style.flex = "1 1 " + (this._computedWeight > 0 ? this._computedWeight : this.size) + "%";
+        }
+        else if (this.size === "auto") {
+            element.style.flex = "0 1 auto";
+        }
+        else {
+            element.style.flex = "1 1 auto";
         }
         return element;
     };
@@ -3469,7 +3417,6 @@ var ContainerWithActions = (function (_super) {
     __extends(ContainerWithActions, _super);
     function ContainerWithActions() {
         var _this = _super.call(this) || this;
-        _this.actionStyle = "button";
         _this._actionCollection = new ActionCollection(_this);
         _this._actionCollection.onHideActionCardPane = function () { _this.showBottomSpacer(null); };
         _this._actionCollection.onShowActionCardPane = function (action) { _this.hideBottomSpacer(null); };
@@ -3477,7 +3424,6 @@ var ContainerWithActions = (function (_super) {
     }
     ContainerWithActions.prototype.internalRender = function () {
         _super.prototype.internalRender.call(this);
-        this._actionCollection.actionStyle = this.actionStyle;
         var renderedActions = this._actionCollection.render();
         if (renderedActions) {
             Utils.appendChild(this._element, Utils.renderSeparation(hostConfig.actions.separation, "vertical"));
@@ -3488,7 +3434,6 @@ var ContainerWithActions = (function (_super) {
     ContainerWithActions.prototype.parse = function (json, itemsCollectionPropertyName) {
         if (itemsCollectionPropertyName === void 0) { itemsCollectionPropertyName = "items"; }
         _super.prototype.parse.call(this, json, itemsCollectionPropertyName);
-        this.actionStyle = Utils.getValueOrDefault(json["actionStyle"], "button");
         if (json["actions"] != undefined) {
             var jsonActions = json["actions"];
             for (var i = 0; i < jsonActions.length; i++) {
@@ -3609,11 +3554,35 @@ var AdaptiveCard = (function (_super) {
     };
     return AdaptiveCard;
 }(ContainerWithActions));
+
+function showPopupCard(action) {
+    var myWindow = window.open("", "MsgWindow", "width=200,height=100");
+    var overlayElement = myWindow.document.createElement("div");
+    overlayElement.id = "popupOverlay";
+    overlayElement.className = "popupOverlay";
+    overlayElement.tabIndex = 0;
+    overlayElement.style.width = myWindow.document.documentElement.scrollWidth + "px";
+    overlayElement.style.height = myWindow.document.documentElement.scrollHeight + "px";
+    overlayElement.onclick = function (e) {
+        document.body.removeChild(overlayElement);
+    };
+    var cardContainer = myWindow.document.createElement("div");
+    cardContainer.className = "popupCardContainer";
+    cardContainer.onclick = function (e) { e.stopPropagation(); };
+    var hostContainer = hostContainerOptions[hostContainerPicker.selectedIndex].hostContainer;
+    cardContainer.appendChild(hostContainer.render(action.card.render(), action.card.renderSpeech()));
+    overlayElement.appendChild(cardContainer);
+    myWindow.document.body.appendChild(overlayElement);
+    var cardContainerBounds = cardContainer.getBoundingClientRect();
+    cardContainer.style.left = (window.innerWidth - cardContainerBounds.width) / 2 + "px";
+    cardContainer.style.top = (window.innerHeight - cardContainerBounds.height) / 2 + "px";
+}
+
 AdaptiveCard.currentVersion = { major: 1, minor: 0 };
 AdaptiveCard.elementTypeRegistry = new TypeRegistry();
 AdaptiveCard.actionTypeRegistry = new TypeRegistry();
 AdaptiveCard.onExecuteAction = null;
-AdaptiveCard.onShowPopupCard = null;
+AdaptiveCard.onShowPopupCard = showPopupCard;
 AdaptiveCard.onInlineCardExpanded = null;
 AdaptiveCard.onParseError = null;
 exports.AdaptiveCard = AdaptiveCard;
@@ -3943,7 +3912,6 @@ function parseActionsConfiguration(obj) {
         separation: parseSeparationDefinition(obj["separation"]),
         buttonSpacing: obj["buttonSpacing"],
         showCard: parseShowCardActionConfiguration(obj["showCard"]),
-        preExpandSingleShowCardAction: Utils.getValueOrDefault(obj["preExpandSingleShowCardAction"], false),
         actionsOrientation: Utils.getValueOrDefault(obj["actionsOrientation"], "horizontal"),
         actionAlignment: Utils.getValueOrDefault(obj["actionAlignment"], "left"),
     } : null;
