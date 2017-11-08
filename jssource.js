@@ -33861,7 +33861,7 @@ background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZ
                         "text": "Here is a ninja cat"
                     }
                 ]
-            }();
+            };
             var container = document.getElementById("container");
             //container.appendChild(renderedCard);
           };
