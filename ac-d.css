@@ -10,15 +10,15 @@
 }
 
 .ac-container.ac-selectable {
-    padding: 50px;
+    padding: 5px;
 }
 
 .ac-container.ac-selectable:hover {
-    background-color: rgba(100, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .ac-container.ac-selectable:active {
-    background-color: rgba(0, 100, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.15);
 }
 
 .ac-pushButton {
