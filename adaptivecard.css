@@ -42,12 +42,11 @@
   }
   
   .ac-pushButton {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
+    
     vertical-align: middle;
     cursor: default;
-    font-family: "Segoe UI", sans-serif;
+    overflow: hidden;
+    font-family: sans-serif-medium;
     font-size: 14px;
     font-weight: 600;
     padding: 3px 10px 4px 10px;
@@ -55,9 +54,10 @@
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-    background-color: white;
+    background: rgba(255, 255, 255, 1.0);
     color: #0078D7;
-    border: 1px solid #B2E0FF;
+    gravity:center_horizontal;
+    border: none;)
   }
   
   .ac-pushButton:hover {
@@ -66,6 +66,12 @@
     border: 1px solid #0078D7;
   }
   
+  .ac-pushButton:disable {
+    background-color: #464B93;
+    color: white;
+    border: 1px solid #464B93;
+  }
+
   .ac-pushButton:active {
     background-color: #464B93;
     color: white;
@@ -93,8 +99,7 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     display: inline-block;
-    font-family: 'FabricMDL2Icons';
-    font-size: 10px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 900;
     margin: auto 0px auto 6px;
