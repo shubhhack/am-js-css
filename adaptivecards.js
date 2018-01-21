@@ -3242,9 +3242,6 @@ var ActionButton = /** @class */ (function () {
     };
     ActionButton.prototype.updateCssStyle = function () {
         this._element.className = "ac-pushButton";
-        if (this._action instanceof ShowCardAction) {
-            this._element.classList.add("expandable");
-        }
         switch (this._state) {
             case ActionButtonState.Expanded:
                 this._element.classList.add("expanded");
