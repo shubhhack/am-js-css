@@ -2596,7 +2596,7 @@ var Image = /** @class */ (function (_super) {
                     element.style.justifyContent = "flex-end";
                     break;
                 default:
-                    element.style.justifyContent = "flex-end";
+                    element.style.justifyContent = "flex-start";
                     break;
             }
             var imageElement = document.createElement("img");
@@ -3711,7 +3711,7 @@ var ActionCollection = /** @class */ (function () {
                             buttonStrip.style.justifyContent = "flex-end";
                             break;
                         default:
-                            buttonStrip.style.justifyContent = "flex-start";
+                            buttonStrip.style.justifyContent = "flex-end";
                             break;
                     }
                 }
@@ -3724,7 +3724,7 @@ var ActionCollection = /** @class */ (function () {
                             buttonStrip.style.justifyContent = "flex-end";
                             break;
                         default:
-                            buttonStrip.style.justifyContent = "flex-start";
+                            buttonStrip.style.justifyContent = "flex-end";
                             break;
                     }
                 }
@@ -3740,7 +3740,7 @@ var ActionCollection = /** @class */ (function () {
                             buttonStrip.style.alignItems = "flex-end";
                             break;
                         default:
-                            buttonStrip.style.alignItems = "flex-start";
+                            buttonStrip.style.alignItems = "flex-end";
                             break;
                     }
                 }
@@ -3756,7 +3756,7 @@ var ActionCollection = /** @class */ (function () {
                             buttonStrip.style.alignItems = "stretch";
                             break;
                         default:
-                            buttonStrip.style.alignItems = "flex-start";
+                            buttonStrip.style.alignItems = "flex-end";
                             break;
                     }
                 }
