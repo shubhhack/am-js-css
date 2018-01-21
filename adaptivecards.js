@@ -3711,7 +3711,7 @@ var ActionCollection = /** @class */ (function () {
                             buttonStrip.style.justifyContent = "flex-end";
                             break;
                         default:
-                            buttonStrip.style.justifyContent = "flex-start";
+                            buttonStrip.style.justifyContent = "flex-end";
                             break;
                     }
                 }
