@@ -373,8 +373,8 @@ function showPopupCard(action) {
     };
 
     //TODO: Change this as required
-    popupWindow.document.head.innerHTML+= '<link rel="stylesheet" type="text/css" href="href="https://saurabhdaksh.github.io/am-js-css/app.css">';
-    popupWindow.document.head.innerHTML+= '<link rel="stylesheet" type="text/css" href="href="https://saurabhdaksh.github.io/am-js-css/adaptivecard.css">';
+    popupWindow.document.head.innerHTML+= '<link rel="stylesheet" type="text/css" href="https://saurabhdaksh.github.io/am-js-css/app.css">';
+    popupWindow.document.head.innerHTML+= '<link rel="stylesheet" type="text/css" href="https://saurabhdaksh.github.io/am-js-css/adaptivecard.css">';
 
     var overlayElement = popupWindow.document.createElement("div");
     overlayElement.id = "popupOverlay";
