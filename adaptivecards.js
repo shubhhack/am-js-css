@@ -3756,7 +3756,7 @@ var ActionCollection = /** @class */ (function () {
                             buttonStrip.style.alignItems = "stretch";
                             break;
                         default:
-                            buttonStrip.style.alignItems = "flex-end";
+                            buttonStrip.style.alignItems = "flex-start";
                             break;
                     }
                 }
