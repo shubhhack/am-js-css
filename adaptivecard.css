@@ -9,6 +9,20 @@
     font-style: normal;
   }
   
+ .android-form input[type="text"]{
+   border-top: none;
+   border-left: none;
+   border-right: none;
+   border-bottom: 2px solid #0099CC;
+  
+   box-sizing: border-box;
+   outline: none;
+  
+   font-size: 1.4em;
+   padding: 0.6em 0.6em;
+   width: 100%;
+  }
+
   a.ac-anchor {
     text-decoration: none;
   }
