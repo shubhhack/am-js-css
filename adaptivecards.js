@@ -3711,7 +3711,7 @@ var ActionCollection = /** @class */ (function () {
                             buttonStrip.style.justifyContent = "flex-end";
                             break;
                         default:
-                            buttonStrip.style.justifyContent = "flex-end";
+                            buttonStrip.style.justifyContent = "flex-start";
                             break;
                     }
                 }
@@ -3740,7 +3740,7 @@ var ActionCollection = /** @class */ (function () {
                             buttonStrip.style.alignItems = "flex-end";
                             break;
                         default:
-                            buttonStrip.style.alignItems = "flex-start";
+                            buttonStrip.style.alignItems = "flex-end";
                             break;
                     }
                 }
