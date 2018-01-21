@@ -2596,7 +2596,7 @@ var Image = /** @class */ (function (_super) {
                     element.style.justifyContent = "flex-end";
                     break;
                 default:
-                    element.style.justifyContent = "flex-start";
+                    element.style.justifyContent = "flex-end";
                     break;
             }
             var imageElement = document.createElement("img");
