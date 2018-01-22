@@ -68,7 +68,7 @@
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-    background: rgba(255, 255, 255, 1.0);
+    background: rgba(0, 0, 0, 0);
     color: #0078D7;
     gravity:center_horizontal;
     border: none;
