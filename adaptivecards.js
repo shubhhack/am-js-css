@@ -4631,7 +4631,7 @@ function onExecuteAction(action) {
         message += "    Body: " + httpAction.body + "\n";
     }
     else if (action instanceof AdaptiveCards.ShowCardAction) {
-        showCard(action);
+        showPopupCard(action);
     }
     else {
         message += "    Type: <unknown>";
