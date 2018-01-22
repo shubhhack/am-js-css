@@ -2332,7 +2332,7 @@ var TextBlock = /** @class */ (function (_super) {
                     colorDefinition = styleDefinition.fontColors.default;
                     break;
             }
-            element.style.color = rgba(0, 0, 0);
+            element.style.color = "rgba(0, 0, 0)";
             var fontWeight;
             switch (this.weight) {
                 case Enums.TextWeight.Lighter:
@@ -4095,7 +4095,7 @@ var Container = /** @class */ (function (_super) {
             }
             var styleDefinition = this.hostConfig.getContainerStyleDefinition(this.style);
             if (!Utils.isNullOrEmpty(styleDefinition.backgroundColor)) {
-                element.style.backgroundColor = rgba(0, 0, 0);
+                element.style.backgroundColor = "rgba(0, 0, 0)";
             }
         }
         if (this.selectAction) {
