@@ -2493,22 +2493,23 @@ var FactSet = /** @class */ (function (_super) {
                 tdElement.style.verticalAlign = "top";
                 textBlock = new TextBlock();
                 textBlock.hostConfig = this.hostConfig;
-		var trElement = document.createElement("tr");
-		trElement.style.marginTop = this.hostConfig.factSet.spacing + "px";
-		var tdElement = document.createElement("td");
-		tdElement.style.maxWidth = this.hostConfig.factSet.title.maxWidth + "px";
-		tdElement.style.verticalAlign = "top";
-                var textBlock = new TextBlock();
-                textBlock.hostConfig = this.hostConfig;
-                textBlock.text = this.facts[i].value;
-                textBlock.size = this.hostConfig.factSet.value.size;
-                textBlock.color = this.hostConfig.factSet.value.color;
-                textBlock.isSubtle = this.hostConfig.factSet.value.isSubtle;
-                textBlock.weight = this.hostConfig.factSet.value.weight;
-                textBlock.wrap = this.hostConfig.factSet.value.wrap;
-                textBlock.spacing = Enums.Spacing.None;
+		var trElement_val = document.createElement("tr");
+		trElement_val.style.marginTop = this.hostConfig.factSet.spacing + "px";
+		var tdElement_val = document.createElement("td");
+		tdElement_val.style.maxWidth = this.hostConfig.factSet.title.maxWidth + "px";
+		tdElement_val.style.verticalAlign = "top";
+                var textBlock_val = new TextBlock();
+                textBlock_val.hostConfig = this.hostConfig;
+                textBlock_val.text = this.facts[i].value;
+                textBlock_val.size = this.hostConfig.factSet.value.size;
+                textBlock_val.color = this.hostConfig.factSet.value.color;
+                textBlock_val.isSubtle = this.hostConfig.factSet.value.isSubtle;
+                textBlock_val.weight = this.hostConfig.factSet.value.weight;
+                textBlock_val.wrap = this.hostConfig.factSet.value.wrap;
+                textBlock_val.spacing = Enums.Spacing.None;
                 Utils.appendChild(tdElement, textBlock.render());
                 Utils.appendChild(trElement, tdElement);
+		Utils.appendChild(trElement_val, tdElement_val);
                 Utils.appendChild(element, trElement);
             }
         }
