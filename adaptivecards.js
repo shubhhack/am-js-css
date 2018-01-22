@@ -1833,7 +1833,6 @@ function renderSeparation(separationDefinition, orientation) {
 }
 exports.renderSeparation = renderSeparation;
 function stringToCssColor(color) {
-    return "rgba(0, 0, 0)";
     var regEx = /#([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})?/gi;
     var matches = regEx.exec(color);
     if (matches && matches[4]) {
