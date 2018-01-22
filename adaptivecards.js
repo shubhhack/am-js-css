@@ -4631,7 +4631,7 @@ function onExecuteAction(action) {
         message += "    Body: " + httpAction.body + "\n";
     }
     else if (action instanceof AdaptiveCards.ShowCardAction) {
-        showPopupCard(action);
+        show'Card(action);
     }
     else {
         message += "    Type: <unknown>";
@@ -4654,6 +4654,7 @@ function showPopupCard(action) {
     var cardContainer = myWindow.document.createElement("div");
     cardContainer.className = "popupCardContainer";
     cardContainer.onclick = function (e) { e.stopPropagation(); };
+    this._owner.hostConfig.actions.actionAlignment = Enums.ActionAlignment.Right:
     cardContainer.appendChild(action.card.render());
     overlayElement.appendChild(cardContainer);
     myWindow.document.body.appendChild(overlayElement);
