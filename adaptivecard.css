@@ -48,11 +48,11 @@
   }
   
   .ac-container.ac-selectable:hover, .ac-columnSet.ac-selectable:hover {
-    background-color: rgba(0, 0, 0, 33);
+    background-color: rgba(0, 0, 0, 0.1);
   }
   
   .ac-container.ac-selectable:active, .ac-columnSet.ac-selectable:active {
-    background-color: rgba(0, 0, 0, 330);
+    background-color: rgba(0, 0, 0, 0.15);
   }
   
   .ac-pushButton {
@@ -68,7 +68,7 @@
        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
-    background: rgba(0, 0, 0, 0);
+    background: rgba(255, 255, 255, 1.0);
     color: #0078D7;
     gravity:center_horizontal;
     border: none;
