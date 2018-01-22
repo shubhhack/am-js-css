@@ -2826,7 +2826,7 @@ var TextInput = /** @class */ (function (_super) {
         if (this.isMultiline) {
             this._textareaElement = document.createElement("input");
 	    this._textareaElement.type = "text";
-            this._textareaElement.className = "android-form";
+            this._textareaElement.className = "ac-container";
             this._textareaElement.style.width = "100%";
             this._textareaElement.tabIndex = 0;
             if (!Utils.isNullOrEmpty(this.placeholder)) {
