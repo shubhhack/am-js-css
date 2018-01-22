@@ -2480,10 +2480,10 @@ var FactSet = /** @class */ (function (_super) {
                 var textBlock = new TextBlock();
                 textBlock.hostConfig = this.hostConfig;
                 textBlock.text = this.facts[i].name;
-                textBlock.size = this.hostConfig.factSet.title.size;
-                textBlock.color = this.hostConfig.factSet.title.color;
+                textBlock.size = 14;//this.hostConfig.factSet.title.size;
+                textBlock.color = #8e8e93; //this.hostConfig.factSet.title.color;
                 textBlock.isSubtle = this.hostConfig.factSet.title.isSubtle;
-                textBlock.weight = this.hostConfig.factSet.title.weight;
+                textBlock.weight = 200;//this.hostConfig.factSet.title.weight;
                 textBlock.wrap = this.hostConfig.factSet.title.wrap;
                 textBlock.spacing = Enums.Spacing.None;
                 Utils.appendChild(tdElement, textBlock.render());
