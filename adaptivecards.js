@@ -4654,7 +4654,7 @@ function showPopupCard(action) {
     var cardContainer = myWindow.document.createElement("div");
     cardContainer.className = "popupCardContainer";
     cardContainer.onclick = function (e) { e.stopPropagation(); };
-    this._owner.hostConfig.actions.actionAlignment = Enums.ActionAlignment.Right:
+    //this._owner.hostConfig.actions.actionAlignment = Enums.ActionAlignment.Right:
     cardContainer.appendChild(action.card.render());
     overlayElement.appendChild(cardContainer);
     myWindow.document.body.appendChild(overlayElement);
