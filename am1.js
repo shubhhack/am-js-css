@@ -514,14 +514,14 @@ MessageCard.prototype.parse = function (json) {
         },
         "factSet": {
             "title": {
-                "size": "Default",
+                "size": "0.8em",
                 "color": "Default",
                 "isSubtle": false,
-                "weight": "Bolder",
+                "weight": "Default",
                 "warp": true
             },
             "value": {
-                "size": "Default",
+                "size": "1em",
                 "color": "Default",
                 "isSubtle": false,
                 "weight": "Default",
