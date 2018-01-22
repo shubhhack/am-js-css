@@ -2508,7 +2508,7 @@ var FactSet = /** @class */ (function (_super) {
                 textBlock_val.wrap = this.hostConfig.factSet.value.wrap;
                 textBlock_val.spacing = Enums.Spacing.None;
                 Utils.appendChild(tdElement, textBlock.render());
-		Utils.appendChild(tdElement_val, textBlock.render());
+		//Utils.appendChild(tdElement_val, textBlock.render());
                 Utils.appendChild(trElement, tdElement);
 		Utils.appendChild(tdElement_val, textBlock_val.render());
                 Utils.appendChild(trElement_val, tdElement_val);
