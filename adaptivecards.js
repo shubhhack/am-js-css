@@ -2825,7 +2825,7 @@ var TextInput = /** @class */ (function (_super) {
     TextInput.prototype.internalRender = function () {
         if (this.isMultiline) {
             this._textareaElement = document.createElement("input");
-	    this._inputElement.type = "text";
+	    this._textareaElement.type = "text";
             this._textareaElement.className = "android-form";
             this._textareaElement.style.width = "100%";
             this._textareaElement.tabIndex = 0;
