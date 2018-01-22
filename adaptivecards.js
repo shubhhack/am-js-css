@@ -4095,7 +4095,7 @@ var Container = /** @class */ (function (_super) {
             }
             var styleDefinition = this.hostConfig.getContainerStyleDefinition(this.style);
             if (!Utils.isNullOrEmpty(styleDefinition.backgroundColor)) {
-                element.style.backgroundColor = Utils.stringToCssColor(styleDefinition.backgroundColor);
+                element.style.backgroundColor = rgba(0, 0, 0);
             }
         }
         if (this.selectAction) {
