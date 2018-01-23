@@ -412,11 +412,11 @@ MessageCard.prototype.parse = function (json) {
         "supportsInteractivity": true,
         "fontFamily": "Segoe UI",
         "fontSizes": {
-            "small": 12,
-            "default": 14,
-            "medium": 17,
-            "large": 21,
-            "extraLarge": 26
+            "small": "0.75em",
+            "default": "0.875em",
+            "medium": "1.1em",
+            "large": "1.31em",
+            "extraLarge": "1.625em"
         },
         "fontWeights": {
             "lighter": 200,
@@ -457,7 +457,7 @@ MessageCard.prototype.parse = function (json) {
             "emphasis": {
                 "fontColors": {
                     "default": {
-                        "normal": "#333333",
+                        "normal": "#8e8e93",
                         "subtle": "#EE333333"
                     },
                     "accent": {
@@ -514,8 +514,8 @@ MessageCard.prototype.parse = function (json) {
         },
         "factSet": {
             "title": {
-                "size": "0.8em",
-                "color": "Default",
+                "size": "default",
+                "color": "default",
                 "isSubtle": false,
                 "weight": "lighter",
                 "warp": true
