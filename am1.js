@@ -521,7 +521,7 @@ MessageCard.prototype.parse = function (json) {
                 "warp": true
             },
             "value": {
-                "size": "1em",
+                "size": "medium",
                 "color": "Default",
                 "isSubtle": false,
                 "weight": "Default",
