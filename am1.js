@@ -452,7 +452,7 @@ MessageCard.prototype.parse = function (json) {
                         "subtle": "#DDcc3300"
                     }
                 },
-                "backgroundColor": "#FFFFFF"
+                "backgroundColor": "#8e8e93"
             },
             "emphasis": {
                 "fontColors": {
