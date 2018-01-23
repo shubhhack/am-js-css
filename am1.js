@@ -412,11 +412,11 @@ MessageCard.prototype.parse = function (json) {
         "supportsInteractivity": true,
         "fontFamily": "Segoe UI",
         "fontSizes": {
-            "small": "0.75em",
-            "default": "0.875em",
-            "medium": "1.1em",
-            "large": "1.31em",
-            "extraLarge": "1.625em"
+            "small": "12",
+            "default": "14",
+            "medium": "16",
+            "large": "21",
+            "extraLarge": "26"
         },
         "fontWeights": {
             "lighter": 200,
