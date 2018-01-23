@@ -65,7 +65,7 @@ MessageCardRenderer.prototype.CustomizeFactSet = function(){
             for (var i = 0; i < this.facts.length; i++) {
                 var trElement = document.createElement("tr");
                 if (i > 0) {
-                    trElement.style.marginTop = this.hostConfig.factSet.spacing.large + "px";
+                    trElement.style.marginTop = this.hostConfig.factSet.spacing.none + "px";
                 }
                 var tdElement = document.createElement("td");
                 tdElement.style.padding = "0";
@@ -88,7 +88,7 @@ MessageCardRenderer.prototype.CustomizeFactSet = function(){
                 
                 trElement = document.createElement("tr");
                 if (i > 0) {
-                    trElement.style.marginTop = this.hostConfig.factSet.spacing.medium + "px";
+                    trElement.style.marginTop = this.hostConfig.factSet.spacing.none + "px";
                 }
                 tdElement = document.createElement("td");
                 tdElement.style.padding = "0px 0px 0px 10px";
@@ -714,6 +714,7 @@ var cardConfigJson = {
         }
     },
     "spacing": {
+        "none": 0,
         "small": 3,
         "default": 8,
         "medium": 20,
