@@ -432,7 +432,7 @@ MessageCard.prototype.parse = function (json) {
             "default": {
                 "fontColors": {
                     "default": {
-                        "normal": "#20000",
+                        "normal": "#2E89FC",
                         "subtle": "#EE333333"
                     },
                     "accent": {
