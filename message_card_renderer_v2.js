@@ -665,11 +665,11 @@ var cardConfigJson = {
         "default": {
             "fontColors": {
                 "default": {
-                    "normal": "#2E89FC",
+                    "normal": "#212121",
                     "subtle": "#EE333333"
                 },
                 "accent": {
-                    "normal": "#2E89FC",
+                    "normal": "#8e8e93",
                     "subtle": "#882E89FC"
                 },
                 "good": {
@@ -748,7 +748,7 @@ var cardConfigJson = {
     "factSet": {
         "title": {
             "size": "Default",
-            "color": "Default",
+            "color": "accent",
             "isSubtle": false,
             "weight": "Bolder",
             "warp": true
