@@ -748,7 +748,7 @@ var cardConfigJson = {
     "factSet": {
         "title": {
             "size": "Default",
-            "color": "Accent",
+            "color": "Emphasis",
             "isSubtle": false,
             "weight": "Bolder",
             "warp": true
