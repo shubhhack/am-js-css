@@ -1,2 +1,148 @@
+.ac-image.ac-selectable {
+    cursor: pointer;
+  }
+  
+  @font-face {
+    font-family: 'FabricMDL2Icons';
+    src: url("https://appsforoffice.microsoft.com/fabric/fonts/icons/FabricMDL2Icons.woff") format("woff"), url("https://appsforoffice.microsoft.com/fabric/fonts/icons/FabricMDL2Icons.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+ .android-form input[type="text"]{
+   border-top: none;
+   border-left: none;
+   border-right: none;
+   border-bottom: 2px solid #0099CC;
+  
+   box-sizing: border-box;
+   outline: none;
+  
+   font-size: 1.4em;
+   padding: 0.6em 0.6em;
+   width: 100%;
+  }
 
-print(shubham chawla)
+  a.ac-anchor {
+    text-decoration: none;
+  }
+  
+  a.ac-anchor:link {
+    color: #005A9E;
+  }
+  
+  a.ac-anchor:visited {
+    color: #005A9E;
+  }
+  
+  a.ac-anchor:link:active {
+    color: #004D84;
+  }
+  
+  a.ac-anchor:visited:active {
+    color: #004D84;
+  }
+  
+  .ac-container.ac-selectable, .ac-columnSet.ac-selectable {
+    padding: 0px;
+  }
+  
+  .ac-container.ac-selectable:hover, .ac-columnSet.ac-selectable:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .ac-container.ac-selectable:active, .ac-columnSet.ac-selectable:active {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+  
+  .ac-pushButton {
+    
+    vertical-align: middle;
+    cursor: default;
+    overflow: hidden;
+    font-family: sans-serif-medium;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 3px 10px 4px 10px;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    background: rgba(255, 255, 255, 1.0);
+    color: #0078D7;
+    gravity:center_horizontal;
+    border: none;
+  }
+  
+  .ac-pushButton:hover {
+    background-color: #0078D7;
+    color: white;
+    border: 1px solid #0078D7;
+  }
+  
+  .ac-pushButton:disable {
+    background-color: #464B93;
+    color: white;
+    border: 1px solid #464B93;
+  }
+
+  .ac-pushButton:active {
+    background-color: #464B93;
+    color: white;
+    border: 1px solid #464B93;
+  }
+  
+  .ac-pushButton.subdued {
+    color: #666666;
+    border: 1px solid #EEEEEE;
+  }
+  
+  .ac-pushButton.subdued:hover {
+    background-color: #0078D7;
+    color: white;
+    border: 1px solid #0078D7;
+  }
+  
+  .ac-pushButton.expanded {
+    background-color: #0078D7;
+    color: white;
+    border: 1px solid #0078D7;
+  }
+  
+  .ac-pushButton.expandable:after {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 900;
+    margin: auto 0px auto 6px;
+    content: '\E70D';
+  }
+  
+  .ac-pushButton.expandable.expanded:after {
+    content: '\E70E';
+  }
+  
+  .ac-input {
+    font-family: "Segoe UI", sans-serif;
+    font-size: 14px;
+    color: black;
+  }
+  
+  .ac-input.ac-textInput {
+    resize: none;
+  }
+  
+  .ac-input.ac-textInput.ac-multiline {
+    height: 72px;
+  }
+  
+  .ac-input.ac-textInput, .ac-input.ac-numberInput, .ac-input.ac-dateInput, .ac-input.ac-timeInput {
+    height: 31px;
+  }
+  
+  .ac-input.ac-textInput, .ac-input.ac-numberInput, .ac-input.ac-dateInput, .ac-input.ac-timeInput, .ac-input.ac-multichoiceInput {
+    border: 1px solid #DDDDDD;
+    padding: 4px 8px 4px 8px;
+  }  
